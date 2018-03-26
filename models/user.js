@@ -1,23 +1,15 @@
 export default (sequelize, DataTypes) => {
-  const User = sequelize.define('User', {
+  const User = sequelize.define('user', {
     username: {
       type: DataTypes.STRING,
       unique: true,
     },
-    isAdmin: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: false,
-    },
   });
 
   User.associate = (models) => {
-    // 1 to many with board
-    User.hasMany(models.Board, {
-      foreignKey: 'owner',
-    });
-    // 1 to many with suggestion
-    User.hasMany(models.Suggestion, {
-      foreignKey: 'creatorId',
+    // 1 to many with polls
+    User.hasMany(models.Polls, {
+      foreignKey: 'creator',
     });
   };
 
