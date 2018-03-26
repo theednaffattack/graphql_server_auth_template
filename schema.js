@@ -58,7 +58,7 @@ export default `
 
   type Mutation {
     vote(pollOptionId: Int!): Boolean!
-    createPoll(name: String!, options: [String!]): PollResonse!
+    createPoll(name: String!, options: [String!]): PollResponse!
     register(username: String!, email: String!, password: String!): RegisterResponse!
     login(email: String!, password: String!): LoginResponse!
   }

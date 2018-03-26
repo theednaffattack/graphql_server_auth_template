@@ -8,7 +8,7 @@ export default (sequelize, DataTypes) => {
 
   User.associate = (models) => {
     // 1 to many with polls
-    User.hasMany(models.Polls, {
+    User.hasMany(models.Poll, {
       foreignKey: 'creator',
     });
   };

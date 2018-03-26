@@ -25,11 +25,13 @@
     "lodash": "^4.17.4",
     "passport": "^0.3.2",
     "passport-facebook": "^2.1.1",
+    "pg": "7.4.1",
     "sequelize": "^4.1.0",
     "subscriptions-transport-ws": "^0.7.3"
   },
   "devDependencies": {
     "babel-cli": "6.26.0",
+    "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.6.1",
     "eslint": "^4.0.0",
     "eslint-config-airbnb-base": "^11.2.0",
