@@ -1,51 +1,28 @@
 export default {
   Query: {
     fields: {
-      getBook: {
-        where: (table, empty, args) => `${table}.id = ${args.id}`,
-      },
-      allBooks: {
+      allPolls: {
         limit: (table, { limit }) => limit,
         orderBy: 'id',
         where: (table, empty, { key }) => `${table}.id > ${key}`,
       },
     },
   },
-  Author: {
-    sqlTable: 'authors',
+  Poll: {
+    sqlTable: 'polls',
     uniqueKey: 'id',
     fields: {
-      books: {
+      options: {
         junction: {
-          sqlTable: '"bookAuthors"',
+          sqlTable: '"pollOptions"',
           include: {
             primary: {
               sqlColumn: 'primary',
             },
           },
           sqlJoins: [
-            (authorTable, junctionTable) => `${authorTable}.id = ${junctionTable}."authorId"`,
-            (junctionTable, bookTable) => `${junctionTable}."bookId" = ${bookTable}.id`,
-          ],
-        },
-      },
-    },
-  },
-  Book: {
-    sqlTable: 'books',
-    uniqueKey: 'id',
-    fields: {
-      authors: {
-        junction: {
-          sqlTable: '"bookAuthors"',
-          include: {
-            primary: {
-              sqlColumn: 'primary',
-            },
-          },
-          sqlJoins: [
-            (bookTable, junctionTable) => `${bookTable}.id = ${junctionTable}."bookId"`,
-            (junctionTable, authorTable) => `${junctionTable}."authorId" = ${authorTable}.id`,
+            (pollTable, junctionTable) => `${pollTable}.id = ${junctionTable}."pollId"`,
+            (junctionTable, pollOptionTable) => `${junctionTable}."pollId" = ${pollOptionTable}.id`,
           ],
         },
       },

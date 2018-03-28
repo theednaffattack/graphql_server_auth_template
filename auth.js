@@ -5,7 +5,7 @@ import bcrypt from 'bcrypt';
 export const createTokens = async (user, secret) => {
   const createToken = jwt.sign(
     {
-      user: _.pick(user, ['id', 'isAdmin']),
+      user: _.pick(user, ['id']),
     },
     secret,
     {
@@ -46,24 +46,37 @@ export const refreshTokens = async (token, refreshToken, models, SECRET) => {
 };
 
 export const tryLogin = async (email, password, models, SECRET) => {
-  const localAuth = await models.LocalAuth.findOne({ where: { email }, raw: true });
-  if (!localAuth) {
+  const user = await models.User.findOne({ where: { email }, raw: true });
+  if (!user) {
     // user with provided email not found
-    throw new Error('Invalid login');
+    // throw new Error('Invalid login'); // old error
+
+    return {
+      ok: false,
+      errors: [{ field: 'email', message: 'Cannot find user with that email' }],
+      authPayload: null,
+    };
   }
 
-  const valid = await bcrypt.compare(password, localAuth.password);
+  const valid = await bcrypt.compare(password, user.password);
   if (!valid) {
     // bad password
-    throw new Error('Invalid login');
+    // throw new Error('Invalid password');
+    return {
+      ok: false,
+      errors: [{ field: 'password', message: 'Wrong password' }],
+      authPayload: null,
+    };
   }
-
-  const user = await models.User.findOne({ where: { id: localAuth.user_id }, raw: true });
 
   const [token, refreshToken] = await createTokens(user, SECRET);
 
   return {
-    token,
-    refreshToken,
+    ok: true,
+    errors: [],
+    authPayload: {
+      token,
+      refreshToken,
+    },
   };
 };

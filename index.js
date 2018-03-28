@@ -10,6 +10,8 @@ import { SubscriptionServer } from 'subscriptions-transport-ws';
 import _ from 'lodash';
 import joinMonsterAdapt from 'join-monster-graphql-tools-adapter';
 
+import { ipStore } from './util/localLan';
+import customLogger from './util/logger';
 import typeDefs from './schema';
 import resolvers from './resolvers';
 import models from './models';
@@ -86,5 +88,6 @@ models.sequelize.sync().then(() =>
         path: '/subscriptions',
       },
     );
+    console.log('server started');
   }),
 );
