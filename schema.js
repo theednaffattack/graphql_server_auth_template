@@ -1,7 +1,7 @@
 export default `
 
   type Subscription {
-    voteHappened: PollOption!
+    voteHappened: Int!
   }
 
   type User {

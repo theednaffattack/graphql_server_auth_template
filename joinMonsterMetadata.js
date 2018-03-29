@@ -13,19 +13,12 @@ export default {
     uniqueKey: 'id',
     fields: {
       options: {
-        junction: {
-          sqlTable: '"pollOptions"',
-          include: {
-            primary: {
-              sqlColumn: 'primary',
-            },
-          },
-          sqlJoins: [
-            (pollTable, junctionTable) => `${pollTable}.id = ${junctionTable}."pollId"`,
-            (junctionTable, pollOptionTable) => `${junctionTable}."pollId" = ${pollOptionTable}.id`,
-          ],
-        },
+        sqlJoin: (pollTable, pollOptionsTable) => `${pollTable}.id = ${pollOptionsTable}."pollId"`,
       },
     },
+  },
+  PollOption: {
+    sqlTable: '"poll_options"',
+    uniqueKey: 'id',
   },
 };
